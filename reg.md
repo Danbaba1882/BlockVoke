@@ -1,4 +1,4 @@
-// Bitcore examples
+# Bitcore examples
 
 // Generate a random address
 
