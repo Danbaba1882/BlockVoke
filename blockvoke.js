@@ -2,11 +2,11 @@
 
 // Generate a random address
 
-
+const index = require('./node_modules/bitcore-lib/index')
+const bitcore = require('bitcore-lib')
 var privateKey = new bitcore.PrivateKey();
 
 var address = privateKey.toAddress();
-
 
 // Generate a address from a SHA256 hash
 
@@ -45,27 +45,6 @@ var transaction = new bitcore.Transaction()
 
 
 // Sign a Bitcoin message
-
-
-var Message = require('bitcore-message');
-
-var privateKey = new bitcore.PrivateKey('L23PpjkBQqpAF4vbMHNfTZAb3KFPBSawQ7KinFTzz7dxq6TZX8UA');
-var message = new Message('This is an example of a signed message.');
-
-var signature = message.sign(privateKey);
-
-
-// Verify a Bitcoin message
-
-
-var Message = require('bitcore-message');
-
-var address = '13Js7D3q4KvfSqgKN8LpNq57gcahrVc5JZ';
-var signature = 'IBOvIfsAs/da1e36W8kw1cQOPqPVXCW5zJgNQ5kI8m57FycZXdeFmeyoIqJSREzE4W7vfDmdmPk0HokuJPvgPPE=';
-
-var verified = new Message('This is an example of a signed message.').verify(address, signature);
- 
-
 // Create an OP RETURN transaction
 
 
@@ -78,34 +57,36 @@ var utxo = {
   "satoshis" : 50000
 };
 
-var transaction = new bitcore.Transaction()
+var transactionn = new bitcore.Transaction()
     .from(utxo)
     .addData('bitcore rocks') // Add OP_RETURN data
     .sign(privateKey);
+    console.log(transactionn)
+var oArray = transactionn.outputs
+var oarray1 = oArray[0]
+var oarraym = oarray1._script
+console.log(oarraym)
 
-
-// Create a 2-of-3 multisig P2SH address
+// Create a 1-of-2 multisig P2SH address
 
 
 var publicKeys = [
   '026477115981fe981a6918a6297d9803c4dc04f328f22041bedff886bbc2962e01',
-  '02c96db2302d19b43d4c69368babace7854cc84eb9e061cde51cfa77ca4a22b8b9',
-  '03c6103b3b83e4a24a0e33a4df246ef11772f9992663db0c35759a5e2ebf68d8e9'
+  '02c96db2302d19b43d4c69368babace7854cc84eb9e061cde51cfa77ca4a22b8b9'
 ];
-var requiredSignatures = 2;
+var requiredSignatures = 1;
 
 var address = new bitcore.Address(publicKeys, requiredSignatures);
 
 
 // Spend from a 2-of-2 multisig P2SH address
 
-avascript
+
 var privateKeys = [
-  new bitcore.PrivateKey('91avARGdfge8E4tZfYLoxeJ5sGBdNJQH4kvjJoQFacbgwmaKkrx'),
-  new bitcore.PrivateKey('91avARGdfge8E4tZfYLoxeJ5sGBdNJQH4kvjJoQFacbgww7vXtT')
+  new bitcore.PrivateKey('91avARGdfge8E4tZfYLoxeJ5sGBdNJQH4kvjJoQFacbgwmaKkrx')
 ];
 var publicKeys = privateKeys.map(bitcore.PublicKey);
-var address = new bitcore.Address(publicKeys, 2); // 2 of 2
+var address = new bitcore.Address(publicKeys, 1); // 1 of 2
 
 var utxo = {
   "txId" : "153068cdd81b73ec9d8dcce27f2c77ddda12dee3db424bff5cafdbe9f01c1756",
@@ -116,6 +97,6 @@ var utxo = {
 };
 
 var transaction = new bitcore.Transaction()
-    .from(utxo, publicKeys, 2)
+    .from(utxo, publicKeys, 1)
     .to('mtoKs9V381UAhUia3d7Vb9GNak8Qvmcsme', 20000)
     .sign(privateKeys);
