@@ -4,6 +4,7 @@
 
 const index = require('./node_modules/bitcore-lib/index')
 const bitcore = require('bitcore-lib')
+const axios = require("axios");
 var privateKey = new bitcore.PrivateKey();
 
 var address = privateKey.toAddress();

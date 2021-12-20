@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "bitcoinjs-lib": "^5.2.0",
     "bitcore-lib": "^8.25.8",
     "bitcore-message": "^1.0.4",
